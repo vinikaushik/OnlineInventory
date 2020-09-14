@@ -120,11 +120,17 @@ public class OrderService {
         paymentDetails.setCreatedDate(new Timestamp(now));
         paymentDetails.setLastUpdated(new Timestamp(now));
 
+
+        try{
         orderRepository.save(order);
         orderAddressDetailRepository.save(orderAddressDetail);
         paymentRepository.save(paymentDetails);
         orderDetailRepository.saveAll(orderDetails);
-        return new ApiResponse(Status.Status_Ok,"Posted Sucessfully", order);
+        return new ApiResponse(order.getId(),"SUCCESS", new Timestamp(System.currentTimeMillis()));
+        }
+        catch (Exception e){
+            return new ApiResponse(new Timestamp(System.currentTimeMillis()),"Failed",e.getMessage());
+        }
 
 
 
