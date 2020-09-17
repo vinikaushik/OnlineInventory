@@ -1,17 +1,45 @@
 package com.example.Order.DTO;
 
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 public class BillingAddressDTO {
+
     private Long id;
+
+    @NotNull(message = "Please enter first name")
     private String firstName;
+    @NotNull(message = "Please enter first name")
     private String middleName;
+    @NotNull(message = "Please enter first name")
     private String lastName;
+
+    @NotNull(message = "Please enter Phone")
+    @Pattern(regexp = "[0-9]*", message = "Phone should be numeric")
     private String phone;
+
+
+    @NotNull(message = "Please enter email")
+    @Email(message = "Invalid formate of email")
     private String email;
+
+    @NotNull(message = "Please enter Address Line 1")
     private String addressLine1;
     private String addressLine2;
+
+    @NotNull(message = "Please enter City")
     private String city;
+
+    @NotNull(message = "Please enter Zip code")
+    @Pattern(regexp = "[0-9]*", message = "Zipcode should be numeric.")
     private String zipCode;
+
+    @NotNull(message = "Please enter state")
     private String state;
+
+    @NotNull(message = "Please enter country")
     private String country;
 
     public BillingAddressDTO() {

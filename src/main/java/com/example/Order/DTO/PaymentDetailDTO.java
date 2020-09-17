@@ -1,13 +1,21 @@
 package com.example.Order.DTO;
 
+import javax.validation.constraints.NotNull;
+
 public class PaymentDetailDTO {
+    @NotNull(message = "Please select payment option")
     Integer paymentType;
+    @NotNull(message = "Please select bankname")
     String bankName;
     String accountNo;
     String ifscCode;
+    @NotNull(message = "Please enter card number")
     String cardNumber;
+    @NotNull(message = "Please enter card user name")
     String cardUserName;
+    @NotNull(message = "Please enter card expiry date")
     String cardExpiryDate;
+
     Double totalTax;
     Double totalPrice;
     Double totalAmount;
