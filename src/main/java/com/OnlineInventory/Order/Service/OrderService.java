@@ -62,11 +62,11 @@ public class OrderService {
 
 
         List<OrderDetail> orderDetails= new ArrayList<>();
-        for(int i = 0; i <orderItems.size(); i++)
+        for(OrderItem orderItem : orderDTO.getItems())
         {
             orderDetail.setDiscountAmount(orderDTO.getCouponDetail().getDiscountAmt());
             orderDetail.setOrder(order);
-            orderDetail.setItem(orderDTO.getItems().get(i));
+            orderDetail.setItem(orderItem);
             orderDetail.setCreateDate(new Timestamp(now));
             orderDetail.setLastUpdate(new Timestamp(now));
             orderDetails.add(orderDetail);
