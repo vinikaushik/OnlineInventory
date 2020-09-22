@@ -4,31 +4,58 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
+@Table(name = "payment_detail")
 public class PaymentDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long payment_id;
+
 
     @ManyToOne
     @JoinColumn(name = "order_id" ,nullable=false)
     Order order;
 
+    @Column(name = "payment_type")
     Integer paymentType;
+
+    @Column(name = "card_number")
     String cardNumber;
+
+    @Column(name = "card_expiry")
     String cardExpiry;
+
+    @Column(name = "card_first_name")
     String cardFirstName;
+
+    @Column(name = "card_last_name")
     String cardLastName;
+
+    @Column(name = "bank_name")
     String bankName;
+
+    @Column(name = "account_number")
     String accountNumber;
+
+    @Column(name = "ifsc_code")
     String ifscCode;
+
+    @Column(name = "order_total_amount")
     Double orderTotalAmount;
+
+    @Column(name = "created_by")
     Integer createdBy;
+
+    @Column(name = "created_date")
     Timestamp createdDate;
+
+    @Column(name = "updated_by")
     Integer updatedBy;
+
+    @Column(name = "last_updated")
     Timestamp lastUpdated;
 
     public PaymentDetails(Long id, Order order, Integer paymentType, String cardNumber, String cardExpiry, String cardFirstName, String cardLastName, String bankName, String accountNumber, String ifscCode, Double orderTotalAmount, Integer createdBy, Timestamp createdDate, Integer updatedBy, Timestamp lastUpdated) {
-        this.id = id;
+        this.payment_id = id;
         this.order = order;
         this.paymentType = paymentType;
         this.cardNumber = cardNumber;
@@ -49,11 +76,11 @@ public class PaymentDetails {
     }
 
     public Long getId() {
-        return id;
+        return payment_id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.payment_id = id;
     }
 
     public Order getOrder() {

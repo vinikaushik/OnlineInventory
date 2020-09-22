@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
+@Table(name = "order_address_detail")
 public class OrderAddressDetail {
 
     @Id
@@ -14,28 +15,73 @@ public class OrderAddressDetail {
     @JoinColumn(name = "order_id" ,nullable=false)
     Order order;
 
+    @Column(name = "ship_to_first_name")
     private  String shipToFirstName;
+
+    @Column(name = "ship_to_middle_name")
     private String shipToMiddleName;
+
+    @Column(name = "ship_to_last_name")
     private String shipToLastName;
+
+    @Column(name = "ship_to_add_line1")
     private  String shipToAddLine1;
+
+    @Column(name = "ship_to_add_line2")
     private  String shipToAddLine2;
+
+    @Column(name = "ship_to_city")
     private  String shipToCity;
+
+    @Column(name = "ship_to_zipcode")
     private  String shipToZipCode;
+
+    @Column(name = "ship_to_state")
     private  String shipToState;
+
+    @Column(name = "ship_to_country")
     private  String shipToCountry;
+
+    @Column(name = "ship_to_bill_to_same_flag")
     private  Boolean shipBillToSameAddress;
+
+    @Column(name = "bill_to_first_name")
     private  String billToFirstName;
+
+    @Column(name = "bill_to_middle_name")
     private  String billToMiddleName;
+
+    @Column(name = "bill_to_last_name")
     private  String billToLastName;
+
+    @Column(name = "bill_to_add_line1")
     private  String billToAddLine1;
+
+    @Column(name = "bill_to_add_line2")
     private  String billToAddLine2;
+
+    @Column(name = "bill_to_city")
     private  String billToCity;
+
+    @Column(name = "bill_to_zipcode")
     private  String billToZipCode;
+
+    @Column(name = "bill_to_state")
     private  String billToState;
+
+    @Column(name = "bill_to_country")
     private  String billToCountry;
+
+    @Column(name = "created_by")
     private  Integer createdBy;
+
+    @Column(name = "created_date")
     private Timestamp createdDate;
+
+    @Column(name = "updated_by")
     private Integer updatedBy;
+
+    @Column(name = "last_updated")
     private Timestamp lastUpdated;
 
     public OrderAddressDetail() {

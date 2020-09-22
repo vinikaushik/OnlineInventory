@@ -9,22 +9,47 @@ public class OrderDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long order_detail_id;
 
 //
 
+    @Column(name = "item_status")
     private Integer itemStatus;
+
+    @Column(name = "item_total_amount")
     private Double itemTotalAmount;
+
+    @Column(name = "quantity")
     private Integer quantity;
+
+    @Column(name = "item_price")
     private Double itemPrice;
+
+    @Column(name = "item_tax_amount")
     private Double taxAmount;
+
+    @Column(name = "discount_type")
     private Integer discountType;
+
+    @Column(name = "discount_code")
     private String discountCode;
+
+    @Column(name = "discount_amount")
     private Double discountAmount;
+
+    @Column(name = "item_comment")
     private String itemComment;
+
+    @Column(name = "created_by")
     private String createdBy;
+
+    @Column(name = "created_date")
     private Timestamp createDate;
+
+    @Column(name = "updated_by")
     private Integer updatedBy;
+
+    @Column(name = "last_updated")
     private Timestamp lastUpdate;
 
 
@@ -34,13 +59,13 @@ public class OrderDetail {
 
     @ManyToOne
     @JoinColumn(name = "item_id" ,nullable=false)
-    OrderItem item1;
+    OrderItem item;
 
     public OrderDetail() {
     }
 
     public OrderDetail(Long id, Integer itemStatus, Double itemTotalAmount, Integer quantity, Double itemPrice, Double taxAmount, Integer discountType, String discountCode, Double discountAmount, String itemComment, String createdBy, Timestamp createDate, Integer updatedBy, Timestamp lastUpdate, Order order, OrderItem item) {
-        this.id = id;
+        this.order_detail_id = id;
         this.itemStatus = itemStatus;
         this.itemTotalAmount = itemTotalAmount;
         this.quantity = quantity;
@@ -55,15 +80,15 @@ public class OrderDetail {
         this.updatedBy = updatedBy;
         this.lastUpdate = lastUpdate;
         this.order = order;
-        this.item1 = item;
+        this.item = item;
     }
 
     public Long getId() {
-        return id;
+        return order_detail_id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.order_detail_id = id;
     }
 
     public Integer getItemStatus() {
@@ -179,10 +204,10 @@ public class OrderDetail {
     }
 
     public OrderItem getItem() {
-        return item1;
+        return item;
     }
 
     public void setItem(OrderItem item) {
-        this.item1 = item;
+        this.item = item;
     }
 }

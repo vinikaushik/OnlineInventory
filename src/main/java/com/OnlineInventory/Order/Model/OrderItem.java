@@ -30,7 +30,7 @@ public class OrderItem
     private Timestamp lastUpdated;
 
 
-    @OneToMany(mappedBy = "item1")
+    @OneToMany(mappedBy = "item")
     List<OrderDetail> orderDetails;
 
     @OneToMany(mappedBy = "item")

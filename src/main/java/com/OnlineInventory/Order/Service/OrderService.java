@@ -5,7 +5,6 @@ import com.OnlineInventory.Order.DTO.BillingAddressDTO;
 import com.OnlineInventory.Order.DTO.OrderDTO;
 import com.OnlineInventory.Order.DTO.PaymentDetailDTO;
 import com.OnlineInventory.Order.Model.*;
-import com.OnlineInventory.Order.OrderApplication;
 import com.OnlineInventory.Order.Repository.*;
 
 
@@ -139,8 +138,8 @@ public class OrderService {
         try{
             orderRepository.save(order);
 
-        logger.info("{  Order Id: "+order.getId().toString()+"  "+ "Status: SUCCESS"+"Timestamp: "+new Timestamp(System.currentTimeMillis())+"  }");
-        return new ApiResponse(order.getId(),"SUCCESS", new Timestamp(System.currentTimeMillis()));
+        logger.info("{  Order Id: "+order.getOrder_id().toString()+"  "+ "Status: SUCCESS"+"Timestamp: "+new Timestamp(System.currentTimeMillis())+"  }");
+        return new ApiResponse(order.getOrder_id(),"SUCCESS", new Timestamp(System.currentTimeMillis()));
         }
         catch (Exception e){
             logger.info("{  Timestamp:  "+new Timestamp( System.currentTimeMillis())+"  Status = Failed"+"  message="+e.getMessage()+"  }");

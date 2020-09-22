@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
-@Table(name="od_order")
+@Table(name = "o_order")
 public class Order {
     @OneToMany(mappedBy = "order",cascade = {CascadeType.ALL})
     List<OrderDetail> orderDetailList;
@@ -24,27 +24,48 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long order_id;
+    @Column(name = "order_status")
     private Integer orderStatus;
+    @Column(name = "order_total_amount")
     private Double orderTotalAmount;
+    @Column(name = "order_base_amount")
     private Double orderBaseAmount;
+    @Column(name = "discount_amount")
     private Double discountAmount;
+    @Column(name = "shipping_amount")
     private Double shippingAmount;
+    @Column(name = "user_type")
     private Integer userType;
+    @Column(name = "payment_status")
     private Integer paymentStatus;
+    @Column(name = "discount_type")
     private Integer discountType;
+    @Column(name = "phone")
     private String phone;
+    @Column(name = "email")
     private String email;
+    @Column(name = "discount_code")
     private String discountCode;
+    @Column(name = "busy_flag")
     private Integer busyFlag;
+    @Column(name = "busy_voucher_id")
     private String busyVoucherId;
+    @Column(name = "notification_type")
     private Integer notificationType;
+    @Column(name = "shipping_method")
     private Integer shippingMethod;
+    @Column(name = "shipping_id")
     private String shippingId;
+    @Column(name = "created_by")
     private Integer createdBy;
+    @Column(name = "created_date")
     private Timestamp createDate;
+    @Column(name = "updated_by")
     private Integer updatedBy;
+    @Column(name = "last_updated")
     private Timestamp lastUpdate;
+
 
 
     public Order() {
@@ -52,7 +73,7 @@ public class Order {
 
     public Order(Long id, Integer orderStatus, Double orderTotalAmount, Double orderBaseAmount, Double discountAmount, Double shippingAmount, Integer userType, Integer paymentStatus, Integer discountType, String phone, String email, String discountCode, Integer busyFlag, String busyVoucherId, Integer notificationType, Integer shippingMethod, String shippingId, Integer createdBy, Timestamp createDate, Integer updatedBy, Timestamp lastUpdate) {
 
-        this.id = id;
+        this.order_id = id;
         this.orderStatus = orderStatus;
         this.orderTotalAmount = orderTotalAmount;
         this.orderBaseAmount = orderBaseAmount;
@@ -107,12 +128,12 @@ public class Order {
         this.paymentDetails = paymentDetails;
     }
 
-    public Long getId() {
-        return id;
+    public Long getOrder_id() {
+        return order_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setOrder_id(Long order_id) {
+        this.order_id = order_id;
     }
 
     public Integer getOrderStatus() {

@@ -6,21 +6,33 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
+@Table(name = "order_history")
 public class OrderHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long order_history_id;
 
     @JsonIgnore
 
-
+    @Column(name = "status")
     private String status;
-    private Timestamp statusData;
+
+    @Column(name = "status_date")
+    private Timestamp statusDate;
+
+    @Column(name = "notification_sent")
     private Boolean notificationSent;
+
+    @Column(name = "created_by")
     private String createdBy;
 
+    @Column(name = "created_date")
     private Timestamp createdDate;
+
+    @Column(name = "updated_by")
     private String updatedBy;
+
+    @Column(name = "last_updated")
     private Timestamp lastUpdated;
 
 
@@ -34,12 +46,12 @@ public class OrderHistory {
     OrderItem item;
 
     public OrderHistory(Long id, Order order, OrderItem item, String status, Timestamp statusData, Boolean notificationSent, String createdBy, Timestamp createdDate, String updatedBy, Timestamp lastUpdated) {
-        this.id = id;
+        this.order_history_id = id;
         this.order = order;
         this.item = item;
 
         this.status = status;
-        this.statusData = statusData;
+        this.statusDate = statusData;
         this.notificationSent = notificationSent;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
@@ -51,11 +63,11 @@ public class OrderHistory {
     }
 
     public Long getId() {
-        return id;
+        return order_history_id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.order_history_id = id;
     }
 
     public Order getOrder() {
@@ -84,12 +96,12 @@ public class OrderHistory {
         this.status = status;
     }
 
-    public Timestamp getStatusData() {
-        return statusData;
+    public Timestamp getStatusDate() {
+        return statusDate;
     }
 
-    public void setStatusData(Timestamp statusData) {
-        this.statusData = statusData;
+    public void setStatusDate(Timestamp statusDate) {
+        this.statusDate = statusDate;
     }
 
     public Boolean getNotificationSent() {
