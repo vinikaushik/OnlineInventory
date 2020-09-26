@@ -15,10 +15,9 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-    @PostMapping("/createOrder")
+    @PostMapping("/")
     public ApiResponse createOrder(@RequestBody OrderDTO orderDTO){
         return orderService.postOrder(orderDTO);
     }
-//    @RequestBody OrderDto order
 
 }

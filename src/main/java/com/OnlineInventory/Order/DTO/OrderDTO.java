@@ -9,7 +9,7 @@ public class OrderDTO {
 
     private String customerType;
 
-    CustomerDetail customerDetail;
+    CustomerDetailDTO customerDetailDTO;
 
     Double orderTotal;
 
@@ -29,14 +29,14 @@ public class OrderDTO {
     public OrderDTO() {
     }
 
-    public OrderDTO(String customerType, CustomerDetail customerDetail,
+    public OrderDTO(String customerType, CustomerDetailDTO customerDetailDTO,
                     Double orderTotal, Integer orderStatus, Integer paymentStatus,
                     Long notificationId, Integer shippingMethod, Double shippingAmt,
                     List<OrderItem> items, AddressDTO address, CouponDetailDTO couponDetail,
                     PaymentDetailDTO paymentDetail) {
 
         this.customerType = customerType;
-        this.customerDetail = customerDetail;
+        this.customerDetailDTO = customerDetailDTO;
         this.orderTotal = orderTotal;
         this.orderStatus = orderStatus;
         this.paymentStatus = paymentStatus;
@@ -57,12 +57,12 @@ public class OrderDTO {
         this.customerType = customerType;
     }
 
-    public CustomerDetail getCustomerDetail() {
-        return customerDetail;
+    public CustomerDetailDTO getCustomerDetail() {
+        return customerDetailDTO;
     }
 
-    public void setCustomerDetail(CustomerDetail customerDetail) {
-        this.customerDetail = customerDetail;
+    public void setCustomerDetail(CustomerDetailDTO customerDetailDTO) {
+        this.customerDetailDTO = customerDetailDTO;
     }
 
     public Double getOrderTotal() {

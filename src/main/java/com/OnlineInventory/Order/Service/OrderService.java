@@ -1,6 +1,7 @@
 package com.OnlineInventory.Order.Service;
 
 import com.OnlineInventory.Order.Commons.ApiResponse;
+import com.OnlineInventory.Order.Commons.BeanUtils;
 import com.OnlineInventory.Order.DTO.BillingAddressDTO;
 import com.OnlineInventory.Order.DTO.OrderDTO;
 import com.OnlineInventory.Order.DTO.PaymentDetailDTO;
@@ -39,87 +40,19 @@ public class OrderService {
     @Autowired
     OrderAddressDetailRepository orderAddressDetailRepository;
 
+    @Autowired
+    BeanUtils beanUtils;
 
     public ApiResponse postOrder(OrderDTO orderDTO) {
+        Long now =System.currentTimeMillis();
         Logger logger = LoggerFactory.getLogger(OrderService.class);
         logger.info("Posting Application ....");
         Order order = new Order();
-        OrderAddressDetail orderAddressDetail = new OrderAddressDetail();
-        OrderDetail orderDetail = new OrderDetail();
+        OrderAddressDetail orderAddressDetail= beanUtils.populateOrderAdressDetail(order,orderDTO);
+        OrderDetail orderDetail=  beanUtils.populateOrderDetail(orderDTO, order);
+        PaymentDetails paymentDetails= beanUtils.populatePaymentDetails(order, orderDTO);
 
-        PaymentDetails paymentDetails = new PaymentDetails();
-        Long now =System.currentTimeMillis();
-        List<OrderItem> orderItems = orderDTO.getItems();
-        BillingAddressDTO billingAddress = orderDTO.getAddress().getBillToAddress();
-        BillingAddressDTO shippingAddress = orderDTO.getAddress().getShipToAddress();
-        PaymentDetailDTO paymentDetailDTO = orderDTO.getPaymentDetail();
-
-
-
-
-//        ?order.setPaymentDetails(Arrays.asList(orderAddressDetail));
-
-
-        List<OrderDetail> orderDetails= new ArrayList<>();
-        for(OrderItem orderItem : orderDTO.getItems())
-        {
-            orderDetail.setDiscountAmount(orderDTO.getCouponDetail().getDiscountAmt());
-            orderDetail.setOrder(order);
-            orderDetail.setItem(orderItem);
-            orderDetail.setCreateDate(new Timestamp(now));
-            orderDetail.setLastUpdate(new Timestamp(now));
-            orderDetails.add(orderDetail);
-            orderDetail.setCreateDate(new Timestamp(now));
-            orderDetail.setLastUpdate(new Timestamp(now));
-        }
-
-        orderDetail.setDiscountAmount(orderDTO.getCouponDetail().getDiscountAmt());
-        orderDetail.setItemStatus(orderDTO.getOrderStatus());
-
-
-
-
-
-
-        orderAddressDetail.setBillToFirstName(billingAddress.getFirstName());
-        orderAddressDetail.setBillToMiddleName(billingAddress.getMiddleName());
-        orderAddressDetail.setBillToLastName(billingAddress.getLastName());
-        orderAddressDetail.setBillToState(billingAddress.getState());
-        orderAddressDetail.setBillToZipCode(billingAddress.getZipCode());
-        orderAddressDetail.setBillToAddLine1(billingAddress.getAddressLine1());
-        orderAddressDetail.setBillToAddLine2(billingAddress.getAddressLine2());
-        orderAddressDetail.setBillToCity(billingAddress.getCity());
-        orderAddressDetail.setBillToCountry(billingAddress.getCountry());
-        orderAddressDetail.setBillToState(billingAddress.getState());
-
-        orderAddressDetail.setShipToFirstName(shippingAddress.getFirstName());
-        orderAddressDetail.setShipToMiddleName(shippingAddress.getMiddleName());
-        orderAddressDetail.setShipToLastName(shippingAddress.getLastName());
-        orderAddressDetail.setShipToState(shippingAddress.getState());
-        orderAddressDetail.setShipToZipCode(shippingAddress.getZipCode());
-        orderAddressDetail.setShipToAddLine1(shippingAddress.getAddressLine1());
-        orderAddressDetail.setShipToAddLine2(shippingAddress.getAddressLine2());
-        orderAddressDetail.setShipToCity(shippingAddress.getCity());
-        orderAddressDetail.setShipToCountry(shippingAddress.getCountry());
-        orderAddressDetail.setShipToState(shippingAddress.getState());
-        orderAddressDetail.setOrder(order);
-        orderAddressDetail.setCreatedDate(new Timestamp(now));
-        orderAddressDetail.setLastUpdated(new Timestamp(now));
-
-//
-        paymentDetails.setPaymentType(paymentDetailDTO.getPaymentType());
-        paymentDetails.setBankName(paymentDetailDTO.getBankName());
-        paymentDetails.setAccountNumber(paymentDetailDTO.getAccountNo());
-        paymentDetails.setIfscCode(paymentDetailDTO.getIfscCode());
-        paymentDetails.setCardNumber(paymentDetailDTO.getCardNumber());
-        paymentDetails.setCardExpiry(paymentDetailDTO.getCardExpiryDate());
-        paymentDetails.setOrderTotalAmount(paymentDetailDTO.getTotalAmount());
-        paymentDetails.setOrder(order);
-        paymentDetails.setCreatedDate(new Timestamp(now));
-        paymentDetails.setLastUpdated(new Timestamp(now));
-
-
-
+        // Populating Order
         order.setOrderStatus(orderDTO.getOrderStatus());
         order.setOrderTotalAmount(orderDTO.getOrderTotal());
         order.setPaymentStatus(orderDTO.getPaymentStatus());
@@ -130,24 +63,27 @@ public class OrderService {
         order.setDiscountCode(orderDTO.getCouponDetail().getCouponName());
         order.setDiscountType(orderDTO.getCouponDetail().getDiscountType());
         order.setCreateDate(new Timestamp(now));
-
         order.setOrderAddressDetails(Arrays.asList(orderAddressDetail));
         order.setOrderDetailList(Arrays.asList(orderDetail));
         order.setPaymentDetails(Arrays.asList(paymentDetails));
 
-        try{
+        try
+        {
             orderRepository.save(order);
-
-        logger.info("{  Order Id: "+order.getOrder_id().toString()+"  "+ "Status: SUCCESS"+"Timestamp: "+new Timestamp(System.currentTimeMillis())+"  }");
-        return new ApiResponse(order.getOrder_id(),"SUCCESS", new Timestamp(System.currentTimeMillis()));
+            logger.info("{  Order Id: "+order.getOrder_id().toString()+"  "+ "Status: SUCCESS"+"Timestamp: "+new Timestamp(System.currentTimeMillis())+"  }");
+            return new ApiResponse(order.getOrder_id(),"SUCCESS", new Timestamp(System.currentTimeMillis()));
         }
-        catch (Exception e){
+        catch (Exception e)
+        {
             logger.info("{  Timestamp:  "+new Timestamp( System.currentTimeMillis())+"  Status = Failed"+"  message="+e.getMessage()+"  }");
-
             return new ApiResponse(new Timestamp(System.currentTimeMillis()),"Failed",e.getMessage());
         }
 
 
 
     }
+
+
+
+
 }

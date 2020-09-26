@@ -36,12 +36,6 @@ public class ApiResponse<T> {
 
     }
 
-//    public ApiResponse(int status, String message, Object result) {
-//        this.status = status;
-//        this.message = message;
-//        this.result = result;
-//    }
-
     public String getStatus() {
         return Status;
     }
