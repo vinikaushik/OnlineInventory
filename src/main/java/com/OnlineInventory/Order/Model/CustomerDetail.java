@@ -8,7 +8,7 @@ public class CustomerDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    public CustomerDetail(){}
     public CustomerDetail( String firstName, String middleName, String lastName, String phone, String email, String addressLine1, String addressLine2, String city, String zipCode, String state, String country) {
 
         this.firstName = firstName;

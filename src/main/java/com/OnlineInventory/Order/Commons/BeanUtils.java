@@ -1,9 +1,9 @@
 package com.OnlineInventory.Order.Commons;
-import com.OnlineInventory.Order.DTO.BillingAddressDTO;
-import com.OnlineInventory.Order.DTO.ItemDTO;
-import com.OnlineInventory.Order.DTO.OrderDTO;
-import com.OnlineInventory.Order.DTO.PaymentDetailDTO;
+import com.OnlineInventory.Order.DTO.*;
 import com.OnlineInventory.Order.Model.*;
+import com.OnlineInventory.Order.Repository.CustomerDetailRepository;
+import com.OnlineInventory.Order.Repository.ItemRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -11,6 +11,12 @@ import java.util.List;
 
 @Service
 public class BeanUtils {
+    @Autowired
+    ItemRepository itemRepository;
+
+    @Autowired
+    CustomerDetailRepository customerDetailRepository;
+
     Long now =System.currentTimeMillis();
 
     public OrderAddressDetail populateOrderAdressDetail(Order order,OrderDTO orderDTO) {
@@ -42,24 +48,64 @@ public class BeanUtils {
         orderAddressDetail.setLastUpdated(new Timestamp(now));
         return  orderAddressDetail;
     }
-    public OrderDetail populateOrderDetail(OrderDTO orderDTO, Order order) {
-        OrderDetail orderDetail = new OrderDetail();
-        List<OrderDetail> orderDetails= new ArrayList<>();
-        for(OrderItem orderItem : orderDTO.getItems())
+    public  List<OrderItem>  saveItem(OrderDTO orderDTO){
+        OrderItem orderItem = new OrderItem();
+        List<OrderItem> orderItems = new ArrayList<>();
+        for(ItemDTO itemDTO : orderDTO.getItems())
         {
+
+            orderItem.setId(itemDTO.getItemId());
+            orderItem.setItemSize(itemDTO.getItemSize());
+            orderItem.setQuantity(itemDTO.getQuantity());
+            orderItem.setPrice(itemDTO.getPrice());
+            itemRepository.save(orderItem);
+//            orderItem.setBusyItemCode(itemDTO.getCouponCode());
+//            orderDetail.setItem(orderItem);
+            orderItems.add(orderItem);
+        }
+        return  orderItems;
+    }
+    public OrderDetail populateOrderDetail(OrderDTO orderDTO, Order order, List<OrderItem> orderItems) {
+        int i=0;
+        OrderDetail orderDetail = new OrderDetail();
+
+        List<OrderDetail> orderDetails= new ArrayList<>();
+
+        for(OrderItem orderItem : orderItems) {
+            orderDetail.setCreateDate(new Timestamp(now));
+            orderDetail.setLastUpdate(new Timestamp(now));
             orderDetail.setItem(orderItem);
+            orderDetail.setCreateDate(new Timestamp(now));
+            orderDetail.setLastUpdate(new Timestamp(now));
+            orderDetail.setDiscountAmount(orderDTO.getCouponDetail().getDiscountAmt());
+            orderDetail.setOrder(order);
+            orderDetail.setDiscountAmount(orderDTO.getCouponDetail().getDiscountAmt());
+            orderDetail.setItemStatus(orderDTO.getOrderStatus());
+            orderDetails.add(orderDetail);
 
         }
-        orderDetail.setCreateDate(new Timestamp(now));
-        orderDetail.setLastUpdate(new Timestamp(now));
-        orderDetails.add(orderDetail);
-        orderDetail.setCreateDate(new Timestamp(now));
-        orderDetail.setLastUpdate(new Timestamp(now));
-        orderDetail.setDiscountAmount(orderDTO.getCouponDetail().getDiscountAmt());
-        orderDetail.setOrder(order);
-        orderDetail.setDiscountAmount(orderDTO.getCouponDetail().getDiscountAmt());
-        orderDetail.setItemStatus(orderDTO.getOrderStatus());
-        return  orderDetail;
+        return orderDetail;
+    }
+
+    public void saveCustomerDetails(OrderDTO orderDTO){
+        CustomerDetail customerDetail = new CustomerDetail();
+        CustomerDetailDTO customerDetailDTO = new CustomerDetailDTO();
+
+        customerDetail.setCustomerId(customerDetailDTO.getCustomerId());
+        customerDetail.setFirstName(customerDetailDTO.getFirstName());
+        customerDetail.setMiddleName(customerDetailDTO.getMiddleName());
+        customerDetail.setLastName(customerDetailDTO.getLastName());
+        customerDetail.setPhone(customerDetailDTO.getPhone());
+        customerDetail.setEmail(customerDetailDTO.getEmail());
+        customerDetail.setAddressLine1(customerDetailDTO.getAddressLine1());
+        customerDetail.setAddressLine2(customerDetailDTO.getAddressLine2());
+        customerDetail.setCity(customerDetailDTO.getCity());
+        customerDetail.setZipCode(customerDetailDTO.getZipCode());
+        customerDetail.setCountry(customerDetailDTO.getCountry());
+        customerDetail.setState(customerDetailDTO.getState());
+        customerDetailRepository.save(customerDetail);
+
+
     }
     public PaymentDetails populatePaymentDetails(Order order , OrderDTO orderDTO) {
 

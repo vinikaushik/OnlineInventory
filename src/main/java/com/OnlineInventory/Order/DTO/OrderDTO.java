@@ -8,17 +8,14 @@ import java.util.List;
 public class OrderDTO {
 
     private String customerType;
-
     CustomerDetailDTO customerDetailDTO;
-
     Double orderTotal;
-
     Integer orderStatus;
     Integer paymentStatus;
     Long notificationId;
     Integer shippingMethod;
     Double shippingAmt;
-    List<OrderItem> items;
+    List<ItemDTO> items;
     AddressDTO address;
     CouponDetailDTO couponDetail;
 
@@ -32,7 +29,7 @@ public class OrderDTO {
     public OrderDTO(String customerType, CustomerDetailDTO customerDetailDTO,
                     Double orderTotal, Integer orderStatus, Integer paymentStatus,
                     Long notificationId, Integer shippingMethod, Double shippingAmt,
-                    List<OrderItem> items, AddressDTO address, CouponDetailDTO couponDetail,
+                    List<ItemDTO> items, AddressDTO address, CouponDetailDTO couponDetail,
                     PaymentDetailDTO paymentDetail) {
 
         this.customerType = customerType;
@@ -113,11 +110,11 @@ public class OrderDTO {
         this.shippingAmt = shippingAmt;
     }
 
-    public List<OrderItem> getItems() {
+    public List<ItemDTO> getItems() {
         return items;
     }
 
-    public void setItems(List<OrderItem> items) {
+    public void setItems(List<ItemDTO> items) {
         this.items = items;
     }
 

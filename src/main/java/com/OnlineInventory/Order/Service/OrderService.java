@@ -48,9 +48,14 @@ public class OrderService {
         Logger logger = LoggerFactory.getLogger(OrderService.class);
         logger.info("Posting Application ....");
         Order order = new Order();
+
+
+        List<OrderItem> orderItems = beanUtils.saveItem(orderDTO);
         OrderAddressDetail orderAddressDetail= beanUtils.populateOrderAdressDetail(order,orderDTO);
-        OrderDetail orderDetail=  beanUtils.populateOrderDetail(orderDTO, order);
+        OrderDetail orderDetail=  beanUtils.populateOrderDetail(orderDTO, order,orderItems);
         PaymentDetails paymentDetails= beanUtils.populatePaymentDetails(order, orderDTO);
+        beanUtils.saveCustomerDetails(orderDTO);
+
 
         // Populating Order
         order.setOrderStatus(orderDTO.getOrderStatus());
