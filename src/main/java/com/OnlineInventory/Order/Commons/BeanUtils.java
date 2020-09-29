@@ -3,6 +3,7 @@ import com.OnlineInventory.Order.DTO.*;
 import com.OnlineInventory.Order.Model.*;
 import com.OnlineInventory.Order.Repository.CustomerDetailRepository;
 import com.OnlineInventory.Order.Repository.ItemRepository;
+import com.OnlineInventory.Order.Repository.OrderHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
@@ -16,6 +17,8 @@ public class BeanUtils {
 
     @Autowired
     CustomerDetailRepository customerDetailRepository;
+    @Autowired
+    OrderHistoryRepository orderHistoryRepository;
 
     Long now =System.currentTimeMillis();
 
@@ -54,11 +57,11 @@ public class BeanUtils {
         for(ItemDTO itemDTO : orderDTO.getItems())
         {
 
-            orderItem.setId(itemDTO.getItemId());
+            orderItem.setId(itemDTO.getId());
             orderItem.setItemSize(itemDTO.getItemSize());
             orderItem.setQuantity(itemDTO.getQuantity());
             orderItem.setPrice(itemDTO.getPrice());
-            itemRepository.save(orderItem);
+//            itemRepository.save(orderItem);
 //            orderItem.setBusyItemCode(itemDTO.getCouponCode());
 //            orderDetail.setItem(orderItem);
             orderItems.add(orderItem);
@@ -87,9 +90,9 @@ public class BeanUtils {
         return orderDetail;
     }
 
-    public void saveCustomerDetails(OrderDTO orderDTO){
+    public CustomerDetail saveCustomerDetails(OrderDTO orderDTO){
         CustomerDetail customerDetail = new CustomerDetail();
-        CustomerDetailDTO customerDetailDTO = new CustomerDetailDTO();
+        CustomerDetailDTO customerDetailDTO = orderDTO.getCustomerDetail();
 
         customerDetail.setCustomerId(customerDetailDTO.getCustomerId());
         customerDetail.setFirstName(customerDetailDTO.getFirstName());
@@ -103,9 +106,9 @@ public class BeanUtils {
         customerDetail.setZipCode(customerDetailDTO.getZipCode());
         customerDetail.setCountry(customerDetailDTO.getCountry());
         customerDetail.setState(customerDetailDTO.getState());
-        customerDetailRepository.save(customerDetail);
+//        customerDetailRepository.save(customerDetail);
 
-
+            return customerDetail;
     }
     public PaymentDetails populatePaymentDetails(Order order , OrderDTO orderDTO) {
 
@@ -124,4 +127,17 @@ public class BeanUtils {
         return paymentDetails;
     }
 
+    public OrderHistory populateOrderHistory (Order order , OrderDTO orderDTO, OrderItem orderItem)
+    {
+        OrderHistory orderHistory = new OrderHistory();
+        orderHistory.setOrder(order);
+        orderHistory.setItem(orderItem);
+        orderHistory.setCreatedDate(new Timestamp(now));
+//        orderHistory.setUpdatedBy(new Timestamp(now));
+        orderHistory.setNotificationSent(orderDTO.getNotificationId()!=null);
+        orderHistory.setLastUpdated(new Timestamp(now));
+        orderHistory.setStatusDate(new Timestamp(now));
+//        orderHistoryRepository.save(orderHistory);
+        return orderHistory;
+    }
 }

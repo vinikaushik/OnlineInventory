@@ -49,12 +49,12 @@ public class OrderService {
         logger.info("Posting Application ....");
         Order order = new Order();
 
-
+        CustomerDetail customerDetail= beanUtils.saveCustomerDetails(orderDTO);
         List<OrderItem> orderItems = beanUtils.saveItem(orderDTO);
+      OrderHistory orderHistory=  beanUtils.populateOrderHistory(order,orderDTO,orderItems.get(0));
         OrderAddressDetail orderAddressDetail= beanUtils.populateOrderAdressDetail(order,orderDTO);
         OrderDetail orderDetail=  beanUtils.populateOrderDetail(orderDTO, order,orderItems);
         PaymentDetails paymentDetails= beanUtils.populatePaymentDetails(order, orderDTO);
-        beanUtils.saveCustomerDetails(orderDTO);
 
 
         // Populating Order
@@ -71,6 +71,7 @@ public class OrderService {
         order.setOrderAddressDetails(Arrays.asList(orderAddressDetail));
         order.setOrderDetailList(Arrays.asList(orderDetail));
         order.setPaymentDetails(Arrays.asList(paymentDetails));
+        order.setOrderHistory(Arrays.asList(orderHistory));
 
         try
         {
