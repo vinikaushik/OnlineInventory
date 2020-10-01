@@ -1,7 +1,7 @@
 package com.OnlineInventory.Order.DTO;
 
 public class ItemDTO {
-    Long id;
+    Long itemId;
     String itemSize;
     Integer quantity;
     Double price;
@@ -15,8 +15,9 @@ public class ItemDTO {
     public ItemDTO() {
     }
 
-    public ItemDTO(Long id, String itemSize, Integer quantity, Double price, Double tax, String couponCode, Integer discountType, Double couponAmount, String itemTotal, String status) {
-        this.id = id;
+
+    public ItemDTO(Long itemId, String itemSize, Integer quantity, Double price, Double tax, String couponCode, Integer discountType, Double couponAmount, String itemTotal, String status) {
+        this.itemId = itemId;
         this.itemSize = itemSize;
         this.quantity = quantity;
         this.price = price;
@@ -28,13 +29,12 @@ public class ItemDTO {
         this.status = status;
     }
 
-    public Long getId() {
-        return id;
+    public Long getItemId() {
+        return itemId;
     }
 
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setItemId(Long itemId) {
+        this.itemId = itemId;
     }
 
     public String getItemSize() {

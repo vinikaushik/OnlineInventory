@@ -57,7 +57,7 @@ public class BeanUtils {
         for(ItemDTO itemDTO : orderDTO.getItems())
         {
 
-            orderItem.setId(itemDTO.getId());
+            orderItem.setId(itemDTO.getItemId());
             orderItem.setItemSize(itemDTO.getItemSize());
             orderItem.setQuantity(itemDTO.getQuantity());
             orderItem.setPrice(itemDTO.getPrice());
