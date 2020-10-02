@@ -37,8 +37,8 @@ public class OrderService {
     @Autowired
     PaymentRepository paymentRepository;
 
-    @Autowired
-    OrderAddressDetailRepository orderAddressDetailRepository;
+//    @Autowired
+//    OrderAddressDetailRepository orderAddressDetailRepository;
 
     @Autowired
     BeanUtils beanUtils;
@@ -68,7 +68,7 @@ public class OrderService {
         order.setDiscountCode(orderDTO.getCouponDetail().getCouponName());
         order.setDiscountType(orderDTO.getCouponDetail().getDiscountType());
         order.setCreateDate(new Timestamp(now));
-        order.setOrderAddressDetails(Arrays.asList(orderAddressDetail));
+        order.setOrderAddressDetails(orderAddressDetail);
         order.setOrderDetailList(Arrays.asList(orderDetail));
         order.setPaymentDetails(Arrays.asList(paymentDetails));
         order.setOrderHistory(Arrays.asList(orderHistory));

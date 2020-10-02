@@ -8,11 +8,13 @@ import java.sql.Timestamp;
 public class OrderAddressDetail {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id" ,nullable=false)
+
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "order_id")
     Order order;
 
     @Column(name = "ship_to_first_name")
@@ -88,8 +90,8 @@ public class OrderAddressDetail {
 
     }
 
-    public OrderAddressDetail(Long id, Order order, String shipToFirstName, String shipToMiddleName, String shipToLastName, String shipToAddLine1, String shipToAddLine2, String shipToCity, String shipToZipCode, String shipToState, String shipToCountry, Boolean shipBillToSameAddress, String billToFirstName, String billToMiddleName, String billToLastName, String billToAddLine1, String billToAddLine2, String billToCity, String billToZipCode, String billToState, String billToCountry, Integer createdBy, Timestamp createdDate, Integer updatedBy, Timestamp lastUpdated) {
-        this.id = id;
+    public OrderAddressDetail( Long id,Order order, String shipToFirstName, String shipToMiddleName, String shipToLastName, String shipToAddLine1, String shipToAddLine2, String shipToCity, String shipToZipCode, String shipToState, String shipToCountry, Boolean shipBillToSameAddress, String billToFirstName, String billToMiddleName, String billToLastName, String billToAddLine1, String billToAddLine2, String billToCity, String billToZipCode, String billToState, String billToCountry, Integer createdBy, Timestamp createdDate, Integer updatedBy, Timestamp lastUpdated) {
+        this.id=id;
         this.order = order;
         this.shipToFirstName = shipToFirstName;
         this.shipToMiddleName = shipToMiddleName;
@@ -115,7 +117,7 @@ public class OrderAddressDetail {
         this.updatedBy = updatedBy;
         this.lastUpdated = lastUpdated;
     }
-
+//
     public Long getId() {
         return id;
     }
@@ -123,6 +125,7 @@ public class OrderAddressDetail {
     public void setId(Long id) {
         this.id = id;
     }
+
 
     public Order getOrder() {
         return order;

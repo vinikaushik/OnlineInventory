@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
-@Table(name = "o_order")
+@Table(name = "order")
 public class Order {
     @OneToMany(mappedBy = "order",cascade = {CascadeType.ALL})
     List<OrderDetail> orderDetailList;
@@ -13,8 +13,8 @@ public class Order {
     @OneToMany(mappedBy = "order",cascade = {CascadeType.ALL})
     List<OrderHistory> orderHistory;
 
-    @OneToMany(mappedBy = "order",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    List<OrderAddressDetail> orderAddressDetails;
+    @OneToOne(mappedBy = "order",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    OrderAddressDetail orderAddressDetails;
 //
     @OneToMany(mappedBy = "order",cascade = {CascadeType.ALL}   )
     List<PaymentDetails> paymentDetails;
@@ -24,6 +24,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="order_id")
     private Long order_id;
     @Column(name = "order_status")
     private Integer orderStatus;
@@ -112,11 +113,11 @@ public class Order {
         this.orderHistory = orderHistory;
     }
 
-    public List<OrderAddressDetail> getOrderAddressDetails() {
+    public OrderAddressDetail getOrderAddressDetails() {
         return orderAddressDetails;
     }
 
-    public void setOrderAddressDetails(List<OrderAddressDetail> orderAddressDetails) {
+    public void setOrderAddressDetails(OrderAddressDetail orderAddressDetails) {
         this.orderAddressDetails = orderAddressDetails;
     }
 
