@@ -52,30 +52,27 @@ public class BeanUtils {
         return  orderAddressDetail;
     }
     public  List<OrderItem>  saveItem(OrderDTO orderDTO){
-        OrderItem orderItem = new OrderItem();
+       
         List<OrderItem> orderItems = new ArrayList<>();
         for(ItemDTO itemDTO : orderDTO.getItems())
         {
-
+        	 OrderItem orderItem = new OrderItem();
             orderItem.setId(itemDTO.getItemId());
             orderItem.setItemSize(itemDTO.getItemSize());
             orderItem.setQuantity(itemDTO.getQuantity());
             orderItem.setPrice(itemDTO.getPrice());
-//            itemRepository.save(orderItem);
-//            orderItem.setBusyItemCode(itemDTO.getCouponCode());
-//            orderDetail.setItem(orderItem);
             orderItems.add(orderItem);
         }
         return  orderItems;
     }
-    public OrderDetail populateOrderDetail(OrderDTO orderDTO, Order order, List<OrderItem> orderItems) {
-        int i=0;
-        OrderDetail orderDetail = new OrderDetail();
-
+    public List<OrderDetail> populateOrderDetail(OrderDTO orderDTO, Order order, List<OrderItem> orderItems) {
+       
         List<OrderDetail> orderDetails= new ArrayList<>();
 
         for(OrderItem orderItem : orderItems) {
-            orderDetail.setCreateDate(new Timestamp(now));
+        	 OrderDetail orderDetail = new OrderDetail();
+
+        	orderDetail.setCreateDate(new Timestamp(now));
             orderDetail.setLastUpdate(new Timestamp(now));
             orderDetail.setItem(orderItem);
             orderDetail.setCreateDate(new Timestamp(now));
@@ -87,7 +84,7 @@ public class BeanUtils {
             orderDetails.add(orderDetail);
 
         }
-        return orderDetail;
+        return orderDetails;
     }
 
     public CustomerDetail saveCustomerDetails(OrderDTO orderDTO){

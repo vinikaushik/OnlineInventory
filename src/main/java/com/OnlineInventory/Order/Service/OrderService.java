@@ -51,14 +51,14 @@ public class OrderService {
 
         CustomerDetail customerDetail= beanUtils.saveCustomerDetails(orderDTO);
         List<OrderItem> orderItems = beanUtils.saveItem(orderDTO);
-      OrderHistory orderHistory=  beanUtils.populateOrderHistory(order,orderDTO,orderItems.get(0));
+        OrderHistory orderHistory=  beanUtils.populateOrderHistory(order,orderDTO,orderItems.get(0));
         OrderAddressDetail orderAddressDetail= beanUtils.populateOrderAdressDetail(order,orderDTO);
-        OrderDetail orderDetail=  beanUtils.populateOrderDetail(orderDTO, order,orderItems);
+        List<OrderDetail> orderDetail=  beanUtils.populateOrderDetail(orderDTO, order,orderItems);
         PaymentDetails paymentDetails= beanUtils.populatePaymentDetails(order, orderDTO);
 
 
         // Populating Order
-        order.setOrderStatus(orderDTO.getOrderStatus());
+        order.setOrderStatus(orderDTO.getOrderStatus());        
         order.setOrderTotalAmount(orderDTO.getOrderTotal());
         order.setPaymentStatus(orderDTO.getPaymentStatus());
         order.setShippingMethod(orderDTO.getShippingMethod());
@@ -69,7 +69,7 @@ public class OrderService {
         order.setDiscountType(orderDTO.getCouponDetail().getDiscountType());
         order.setCreateDate(new Timestamp(now));
         order.setOrderAddressDetails(orderAddressDetail);
-        order.setOrderDetailList(Arrays.asList(orderDetail));
+        order.setOrderDetailList(orderDetail);
         order.setPaymentDetails(Arrays.asList(paymentDetails));
         order.setOrderHistory(Arrays.asList(orderHistory));
 
