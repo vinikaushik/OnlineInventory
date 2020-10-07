@@ -1,6 +1,9 @@
 package com.OnlineInventory.Order.Model;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -30,9 +33,11 @@ public class OrderItem
     private Timestamp lastUpdated;
 
 
+    @JsonIgnoreProperties("item")
     @OneToMany(mappedBy = "item")
     List<OrderDetail> orderDetails;
 
+    @JsonIgnoreProperties("item")    
     @OneToMany(mappedBy = "item")
     List<OrderHistory> orderHistory;
 

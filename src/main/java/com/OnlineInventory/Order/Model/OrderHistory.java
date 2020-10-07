@@ -49,7 +49,6 @@ public class OrderHistory {
         this.order_history_id = id;
         this.order = order;
         this.item = item;
-
         this.status = status;
         this.statusDate = statusData;
         this.notificationSent = notificationSent;

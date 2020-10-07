@@ -18,6 +18,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -43,9 +44,11 @@ public class OrderService {
     @Autowired
     BeanUtils beanUtils;
 
+    Logger logger = LoggerFactory.getLogger(OrderService.class);
+    
     public ApiResponse postOrder(OrderDTO orderDTO) {
         Long now =System.currentTimeMillis();
-        Logger logger = LoggerFactory.getLogger(OrderService.class);
+        
         logger.info("Posting Application ....");
         Order order = new Order();
 
@@ -88,6 +91,17 @@ public class OrderService {
 
 
     }
+
+	public ApiResponse<Order> getOrderById(Long id) {
+		logger.info("getting order by id"+id);
+		Optional<Order> order = orderRepository.findById(id);
+		if(order.isPresent()) {
+			return new ApiResponse<Order>(order,"SUCCESS",new Timestamp(System.currentTimeMillis()));
+		}
+		return new ApiResponse<Order>(null,"Order Id doesn't exsist",new Timestamp(System.currentTimeMillis()));
+		
+		
+	}
 
 
 

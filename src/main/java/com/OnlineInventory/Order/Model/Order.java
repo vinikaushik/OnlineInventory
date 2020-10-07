@@ -1,21 +1,34 @@
 package com.OnlineInventory.Order.Model;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name ="order")
 public class Order {
+	
+
+	@JsonIgnoreProperties("order")
     @OneToMany(mappedBy = "order",cascade = {CascadeType.ALL})
     List<OrderDetail> orderDetailList;
 
+	
+	@JsonIgnoreProperties({"order","item"})
     @OneToMany(mappedBy = "order",cascade = {CascadeType.ALL})
     List<OrderHistory> orderHistory;
 
+
+	@JsonIgnoreProperties("order")
     @OneToOne(mappedBy = "order",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     OrderAddressDetail orderAddressDetails;
 //
+	
+	@JsonIgnoreProperties("order")
     @OneToMany(mappedBy = "order",cascade = {CascadeType.ALL}   )
     List<PaymentDetails> paymentDetails;
 

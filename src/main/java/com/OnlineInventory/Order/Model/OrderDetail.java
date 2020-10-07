@@ -1,6 +1,9 @@
 package com.OnlineInventory.Order.Model;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.sql.Timestamp;
 
 @Entity
@@ -57,6 +60,7 @@ public class OrderDetail {
     @JoinColumn(name = "order_id" ,nullable=false)
     Order order;
 
+    @JsonIgnoreProperties({"orderHistory","orderDetails"})
     @ManyToOne
     @JoinColumn(name = "item_id" ,nullable=false)
     OrderItem item;

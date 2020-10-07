@@ -13,7 +13,17 @@ public class ApiResponse<T> {
     Long orderId;
     String message;
     String details;
-    public ApiResponse( Long orderId, String Status,  Timestamp timestamp) {
+    private Object result;
+    
+    
+    public ApiResponse(Object result,String status, Timestamp timestamp ) {
+		super();
+		Status = status;
+		this.timestamp = timestamp;
+		this.result = result;
+	}
+
+	public ApiResponse( Long orderId, String Status,  Timestamp timestamp) {
 
         this.orderId= orderId;
         this.Status = Status;
@@ -59,4 +69,13 @@ public class ApiResponse<T> {
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
+
+	public Object getResult() {
+		return result;
+	}
+
+	public void setResult(Object result) {
+		this.result = result;
+	}
+    
 }
