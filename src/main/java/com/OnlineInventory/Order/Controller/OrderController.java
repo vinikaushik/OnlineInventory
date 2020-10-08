@@ -5,6 +5,7 @@ import com.OnlineInventory.Order.DTO.OrderDTO;
 import com.OnlineInventory.Order.Model.Order;
 import com.OnlineInventory.Order.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,12 +18,12 @@ public class OrderController {
     OrderService orderService;
 
     @PostMapping("/")
-    public ApiResponse createOrder(@RequestBody OrderDTO orderDTO){
+    public ResponseEntity<Object> createOrder(@RequestBody OrderDTO orderDTO){
         return orderService.postOrder(orderDTO);
     }
     
     @GetMapping("/{id}")
-    public ApiResponse<Order> getOrderByID(@PathVariable("id") Long id){    	
+    public ResponseEntity<Order> getOrderByID(@PathVariable("id") Long id){    	
     	return orderService.getOrderById(id); 
     }
 

@@ -12,6 +12,8 @@ import com.OnlineInventory.Order.Repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -46,7 +48,7 @@ public class OrderService {
 
     Logger logger = LoggerFactory.getLogger(OrderService.class);
     
-    public ApiResponse postOrder(OrderDTO orderDTO) {
+    public ResponseEntity<Object> postOrder(OrderDTO orderDTO) {
         Long now =System.currentTimeMillis();
         
         logger.info("Posting Application ....");
@@ -80,25 +82,26 @@ public class OrderService {
         {
             orderRepository.save(order);
             logger.info("{  Order Id: "+order.getOrder_id().toString()+"  "+ "Status: SUCCESS"+"Timestamp: "+new Timestamp(System.currentTimeMillis())+"  }");
-            return new ApiResponse(order.getOrder_id(),"SUCCESS", new Timestamp(System.currentTimeMillis()));
+            return ResponseEntity.ok(order.getOrder_id());//new ApiResponse(order.getOrder_id(),"SUCCESS", new Timestamp(System.currentTimeMillis()));
         }
         catch (Exception e)
         {
             logger.info("{  Timestamp:  "+new Timestamp( System.currentTimeMillis())+"  Status = Failed"+"  message="+e.getMessage()+"  }");
-            return new ApiResponse(new Timestamp(System.currentTimeMillis()),"Failed",e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            		//new ApiResponse(new Timestamp(System.currentTimeMillis()),"Failed",e.getMessage());
         }
 
 
 
     }
 
-	public ApiResponse<Order> getOrderById(Long id) {
+	public ResponseEntity<Order> getOrderById(Long id) {
 		logger.info("getting order by id"+id);
 		Optional<Order> order = orderRepository.findById(id);
 		if(order.isPresent()) {
-			return new ApiResponse<Order>(order,"SUCCESS",new Timestamp(System.currentTimeMillis()));
+			return ResponseEntity.ok(order.get()); //new ApiResponse<Order>(order,"SUCCESS",new Timestamp(System.currentTimeMillis()));
 		}
-		return new ApiResponse<Order>(null,"Order Id doesn't exsist",new Timestamp(System.currentTimeMillis()));
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);//new ApiResponse<Order>(null,"Order Id doesn't exsist",new Timestamp(System.currentTimeMillis()));
 		
 		
 	}
