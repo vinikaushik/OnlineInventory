@@ -75,6 +75,9 @@ public class BeanUtils {
         	orderDetail.setCreateDate(new Timestamp(now));
             orderDetail.setLastUpdate(new Timestamp(now));
             orderDetail.setItem(orderItem);
+            orderDetail.setItemTotalAmount(orderItem.getPrice()*orderItem.getQuantity());
+            orderDetail.setQuantity(orderItem.getQuantity());
+            orderDetail.setItemPrice(orderItem.getPrice());
             orderDetail.setCreateDate(new Timestamp(now));
             orderDetail.setLastUpdate(new Timestamp(now));
             orderDetail.setDiscountAmount(orderDTO.getCouponDetail().getDiscountAmt());

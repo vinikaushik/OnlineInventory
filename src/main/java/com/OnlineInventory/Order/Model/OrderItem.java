@@ -15,23 +15,47 @@ public class OrderItem
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "item_id")
     private Long id;
 
-
-
+    @Column(name = "name")
     private  String name;
+
+    @Column(name = "product_id")
     private Integer productId;
+
+    @Column(name = "sku")
     private String sku;
+
+    @Column(name = "busy_item_code")
     private Long busyItemCode;
+
+    @Column(name = "long_name")
     private String longName;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "quantity")
     private  Integer quantity;
+
+    @Column(name = "price")
     private Double price;
+
+    @Column(name = "item_color")
     private String itemColor;
+
+    @Column(name = "item_size")
     private String itemSize;
+
+    @Column(name = "updated_by")
     private Integer updatedBy;
+
+    @Column(name = "last_updated")
     private Timestamp lastUpdated;
 
+    @Column(name = "tax_rate")
+    private Double taxRate;
 
     @JsonIgnoreProperties("item")
     @OneToMany(mappedBy = "item")
@@ -44,7 +68,8 @@ public class OrderItem
     public OrderItem( String name, Integer productId, String sku, Long busyItemCode, String longName,
                      String description, Integer quantity, Double price,
                      String itemColor, String itemSize, Integer updatedBy,
-                     Timestamp lastUpdated, List<OrderDetail> orderDetails, List<OrderHistory> orderHistory) {
+                     Timestamp lastUpdated, List<OrderDetail> orderDetails, List<OrderHistory> orderHistory,Double taxRate
+    ) {
 
         this.name = name;
         this.productId = productId;
@@ -60,6 +85,7 @@ public class OrderItem
         this.lastUpdated = lastUpdated;
         this.orderDetails = orderDetails;
         this.orderHistory = orderHistory;
+        this.taxRate=taxRate;
     }
 
     public OrderItem() {
@@ -183,6 +209,14 @@ public class OrderItem
 
     public void setOrderHistory(List<OrderHistory> orderHistory) {
         this.orderHistory = orderHistory;
+    }
+
+    public Double getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(Double taxRate) {
+        this.taxRate = taxRate;
     }
 }
 

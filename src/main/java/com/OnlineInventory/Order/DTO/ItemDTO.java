@@ -9,14 +9,14 @@ public class ItemDTO {
     String couponCode;// order k table
     Integer discountType;
     Double couponAmount;
-    String itemTotal;
+    Double total;
     String status;
 
     public ItemDTO() {
     }
 
 
-    public ItemDTO(Long itemId, String itemSize, Integer quantity, Double price, Double tax, String couponCode, Integer discountType, Double couponAmount, String itemTotal, String status) {
+    public ItemDTO(Long itemId, String itemSize, Integer quantity, Double price, Double tax, String couponCode, Integer discountType, Double couponAmount, Double total, String status) {
         this.itemId = itemId;
         this.itemSize = itemSize;
         this.quantity = quantity;
@@ -25,7 +25,7 @@ public class ItemDTO {
         this.couponCode = couponCode;
         this.discountType = discountType;
         this.couponAmount = couponAmount;
-        this.itemTotal = itemTotal;
+        this.total = total;
         this.status = status;
     }
 
@@ -93,12 +93,12 @@ public class ItemDTO {
         this.couponAmount = couponAmount;
     }
 
-    public String getItemTotal() {
-        return itemTotal;
+    public Double getTotal() {
+        return total;
     }
 
-    public void setItemTotal(String itemTotal) {
-        this.itemTotal = itemTotal;
+    public void setTotal(Double total) {
+        this.total = total;
     }
 
     public String getStatus() {
