@@ -80,12 +80,14 @@ public class Order {
     @Column(name = "last_updated")
     private Timestamp lastUpdate;
 
+    @Column(name="delivery_instruction")
+    private String deliveryInstruction;
 
 
     public Order() {
     }
 
-    public Order(Long id, Integer orderStatus, Double orderTotalAmount, Double orderBaseAmount, Double discountAmount, Double shippingAmount, Integer userType, Integer paymentStatus, Integer discountType, String phone, String email, String discountCode, Integer busyFlag, String busyVoucherId, Integer notificationType, Integer shippingMethod, String shippingId, Integer createdBy, Timestamp createDate, Integer updatedBy, Timestamp lastUpdate) {
+    public Order(Long id, Integer orderStatus, Double orderTotalAmount, Double orderBaseAmount, Double discountAmount, Double shippingAmount, Integer userType, Integer paymentStatus, Integer discountType, String phone, String email, String discountCode, Integer busyFlag, String busyVoucherId, Integer notificationType, Integer shippingMethod, String shippingId, Integer createdBy, Timestamp createDate, Integer updatedBy, Timestamp lastUpdate, String deliveryInstruction) {
 
         this.order_id = id;
         this.orderStatus = orderStatus;
@@ -108,6 +110,7 @@ public class Order {
         this.createDate = createDate;
         this.updatedBy = updatedBy;
         this.lastUpdate = lastUpdate;
+        this.deliveryInstruction=deliveryInstruction;
     }
 
     public List<OrderDetail> getOrderDetailList() {
@@ -308,5 +311,13 @@ public class Order {
 
     public void setLastUpdate(Timestamp lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public String getDeliveryInstruction() {
+        return deliveryInstruction;
+    }
+
+    public void setDeliveryInstruction(String deliveryInstruction) {
+        this.deliveryInstruction = deliveryInstruction;
     }
 }

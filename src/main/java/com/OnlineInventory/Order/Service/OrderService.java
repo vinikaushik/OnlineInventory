@@ -77,6 +77,7 @@ public class OrderService {
         order.setOrderDetailList(orderDetail);
         order.setPaymentDetails(Arrays.asList(paymentDetails));
         order.setOrderHistory(Arrays.asList(orderHistory));
+        order.setDeliveryInstruction(orderDTO.getDeliveryInstruction());
 
         try
         {
