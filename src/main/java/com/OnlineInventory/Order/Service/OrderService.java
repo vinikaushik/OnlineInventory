@@ -64,6 +64,15 @@ public class OrderService {
 
         // Populating Order
         order.setOrderStatus(orderDTO.getOrderStatus());        
+            order.setOrderTotalAmount(orderDTO.getPaymentDetail().getTotalPrice());
+        order.setOrderBaseAmount(orderDTO.getOrderTotal());
+        order.setCreatedBy(orderDTO.getCustomerDetail().getCustomerId().intValue());
+        order.setDiscountAmount(orderDTO.getCouponDetail().getDiscountAmt());
+        order.setPhone(orderDTO.getCustomerDetail().getPhone());
+        order.setShippingId(orderDTO.getShippingMethod().toString());
+        order.setUpdatedBy(orderDTO.getCustomerDetail().getCustomerId().intValue());
+        order.setEmail(orderDTO.getCustomerDetail().getEmail());
+        order.setNotificationType(orderDTO.getNotificationId().intValue());
         order.setOrderTotalAmount(orderDTO.getOrderTotal());
         order.setPaymentStatus(orderDTO.getPaymentStatus());
         order.setShippingMethod(orderDTO.getShippingMethod());
@@ -78,6 +87,8 @@ public class OrderService {
         order.setPaymentDetails(Arrays.asList(paymentDetails));
         order.setOrderHistory(Arrays.asList(orderHistory));
         order.setDeliveryInstruction(orderDTO.getDeliveryInstruction());
+        order.setCreateDate(new Timestamp(now));
+
 
         try
         {

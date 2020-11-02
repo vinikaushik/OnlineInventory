@@ -81,6 +81,8 @@ public class BeanUtils {
             orderDetail.setCreateDate(new Timestamp(now));
             orderDetail.setLastUpdate(new Timestamp(now));
             orderDetail.setDiscountAmount(orderDTO.getCouponDetail().getDiscountAmt());
+            orderDetail.setDiscountCode(orderDTO.getCouponDetail().getCouponName());
+            orderDetail.setDiscountType(orderDTO.getCouponDetail().getDiscountType());
             orderDetail.setOrder(order);
             orderDetail.setDiscountAmount(orderDTO.getCouponDetail().getDiscountAmt());
             orderDetail.setItemStatus(orderDTO.getOrderStatus());
@@ -120,7 +122,9 @@ public class BeanUtils {
         paymentDetails.setIfscCode(paymentDetailDTO.getIfscCode());
         paymentDetails.setCardNumber(paymentDetailDTO.getCardNumber());
         paymentDetails.setCardExpiry(paymentDetailDTO.getCardExpiryDate());
-        paymentDetails.setOrderTotalAmount(paymentDetailDTO.getTotalAmount());
+        paymentDetails.setOrderTotalAmount(paymentDetailDTO.getTotalPrice());
+        paymentDetails.setCardFirstName(paymentDetailDTO.getCardUserName().split(" ")[0]);
+        paymentDetails.setCardLastName(paymentDetailDTO.getCardUserName().split(" ")[1]);
         paymentDetails.setOrder(order);
         paymentDetails.setCreatedDate(new Timestamp(now));
         paymentDetails.setLastUpdated(new Timestamp(now));
