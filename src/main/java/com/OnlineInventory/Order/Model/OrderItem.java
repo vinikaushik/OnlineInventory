@@ -13,45 +13,35 @@ public class OrderItem
 {
 
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "item_id")
+    @Column(name="item_id")
     private Long id;
 
-    @Column(name = "name")
+
+    @Column(name="name")
     private  String name;
-
-    @Column(name = "product_id")
-    private Integer productId;
-
-    @Column(name = "sku")
+    //@Column(name="product_id")
+   // private Integer productId;
+    @Column(name="sku")
     private String sku;
-
-    @Column(name = "busy_item_code")
+    @Column(name="busy_item_code")
     private Long busyItemCode;
-
-    @Column(name = "long_name")
+    @Column(name="long_name")
     private String longName;
-
-    @Column(name = "description")
+    @Column(name="description")
     private String description;
-
-    @Column(name = "quantity")
+    @Column(name="quantity")
     private  Integer quantity;
-
-    @Column(name = "price")
+    @Column(name="price")
     private Double price;
-
-    @Column(name = "item_color")
+    @Column(name="item_color")
     private String itemColor;
-
-    @Column(name = "item_size")
+    @Column(name="item_size")
     private String itemSize;
-
-    @Column(name = "updated_by")
+    @Column(name="updated_by")
     private Integer updatedBy;
-
-    @Column(name = "last_updated")
+    @Column(name="last_updated")
     private Timestamp lastUpdated;
 
     @Column(name = "tax_rate")
@@ -64,15 +54,27 @@ public class OrderItem
     @JsonIgnoreProperties("item")    
     @OneToMany(mappedBy = "item")
     List<OrderHistory> orderHistory;
+    
+    @JsonIgnoreProperties("product")
+    @OneToOne
+    @JoinColumn(name = "product_id" ,nullable=false)
+    Product product;
 
-    public OrderItem( String name, Integer productId, String sku, Long busyItemCode, String longName,
+    public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public OrderItem( String name, String sku, Long busyItemCode, String longName,
                      String description, Integer quantity, Double price,
                      String itemColor, String itemSize, Integer updatedBy,
-                     Timestamp lastUpdated, List<OrderDetail> orderDetails, List<OrderHistory> orderHistory,Double taxRate
-    ) {
+                     Timestamp lastUpdated, List<OrderDetail> orderDetails, List<OrderHistory> orderHistory,Double taxRate, Product product) {
 
         this.name = name;
-        this.productId = productId;
+       // this.productId = productId;
         this.sku = sku;
         this.busyItemCode = busyItemCode;
         this.longName = longName;
@@ -86,6 +88,7 @@ public class OrderItem
         this.orderDetails = orderDetails;
         this.orderHistory = orderHistory;
         this.taxRate=taxRate;
+        this.product = product;
     }
 
     public OrderItem() {
@@ -107,13 +110,11 @@ public class OrderItem
         this.name = name;
     }
 
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
+	/*
+	 * public Integer getProductId() { return productId; }
+	 * 
+	 * public void setProductId(Integer productId) { this.productId = productId; }
+	 */
 
     public String getSku() {
         return sku;
