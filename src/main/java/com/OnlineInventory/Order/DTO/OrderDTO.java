@@ -1,13 +1,12 @@
-package com.OnlineInventory.Order.DTO;
+package com.inventory.order.dto;
 
-import com.OnlineInventory.Order.Model.CustomerDetail;
-import com.OnlineInventory.Order.Model.OrderItem;
-
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 public class OrderDTO {
 
     private String customerType;
+//    @NotBlank(message = "Title is required")
     CustomerDetailDTO customerDetailDTO;
     Double orderTotal;
     Integer orderStatus;
@@ -20,17 +19,26 @@ public class OrderDTO {
     CouponDetailDTO couponDetail;
     String deliveryInstruction;
     PaymentDetailDTO paymentDetail;
+    Double orderTax;
 
 
 
-    public OrderDTO() {
+    public Double getOrderTax() {
+		return orderTax;
+	}
+
+	public void setOrderTax(Double orderTax) {
+		this.orderTax = orderTax;
+	}
+
+	public OrderDTO() {
     }
 
     public OrderDTO(String customerType, CustomerDetailDTO customerDetailDTO,
                     Double orderTotal, Integer orderStatus, Integer paymentStatus,
                     Long notificationId, Integer shippingMethod, Double shippingAmt,
                     List<ItemDTO> items, AddressDTO address, CouponDetailDTO couponDetail,
-                    PaymentDetailDTO paymentDetail, String deliveryInstruction) {
+                    PaymentDetailDTO paymentDetail, String deliveryInstruction, Double orderTax) {
 
         this.customerType = customerType;
         this.customerDetailDTO = customerDetailDTO;
@@ -45,6 +53,7 @@ public class OrderDTO {
         this.couponDetail = couponDetail;
         this.paymentDetail = paymentDetail;
         this.deliveryInstruction=deliveryInstruction;
+        this.orderTax=orderTax;
     }
 
     public String getCustomerType() {
