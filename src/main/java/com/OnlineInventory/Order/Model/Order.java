@@ -1,9 +1,8 @@
-package com.OnlineInventory.Order.Model;
+package com.inventory.order.model;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -82,12 +81,17 @@ public class Order {
 
     @Column(name="delivery_instruction")
     private String deliveryInstruction;
+    
+    @Column(name="tax")
+    private Double orderTax;
+    
+    
 
 
     public Order() {
     }
 
-    public Order(Long id, Integer orderStatus, Double orderTotalAmount, Double orderBaseAmount, Double discountAmount, Double shippingAmount, Integer userType, Integer paymentStatus, Integer discountType, String phone, String email, String discountCode, Integer busyFlag, String busyVoucherId, Integer notificationType, Integer shippingMethod, String shippingId, Integer createdBy, Timestamp createDate, Integer updatedBy, Timestamp lastUpdate, String deliveryInstruction) {
+    public Order(Long id, Integer orderStatus, Double orderTotalAmount, Double orderBaseAmount, Double discountAmount, Double shippingAmount, Integer userType, Integer paymentStatus, Integer discountType, String phone, String email, String discountCode, Integer busyFlag, String busyVoucherId, Integer notificationType, Integer shippingMethod, String shippingId, Integer createdBy, Timestamp createDate, Integer updatedBy, Timestamp lastUpdate, String deliveryInstruction, Double orderTax) {
 
         this.order_id = id;
         this.orderStatus = orderStatus;
@@ -111,6 +115,7 @@ public class Order {
         this.updatedBy = updatedBy;
         this.lastUpdate = lastUpdate;
         this.deliveryInstruction=deliveryInstruction;
+        this.orderTax = orderTax;
     }
 
     public List<OrderDetail> getOrderDetailList() {
@@ -320,4 +325,14 @@ public class Order {
     public void setDeliveryInstruction(String deliveryInstruction) {
         this.deliveryInstruction = deliveryInstruction;
     }
+
+	public Double getOrderTax() {
+		return orderTax;
+	}
+
+	public void setOrderTax(Double orderTax) {
+		this.orderTax = orderTax;
+	}
+    
+    
 }
