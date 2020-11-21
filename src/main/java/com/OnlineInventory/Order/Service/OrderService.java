@@ -1,11 +1,13 @@
 package com.inventory.order.service;
 
-import com.inventory.order.dto.CustomerAddressDTO;
-import com.inventory.order.dto.OrderDTO;
-import com.inventory.order.model.Order;
+import java.util.Date;
+
 import org.springframework.http.ResponseEntity;
 
-import java.util.Date;
+import com.inventory.order.dto.CustomerAddressDTO;
+import com.inventory.order.dto.OrderDTO;
+import com.inventory.order.dto.OrderReturnItemsDTO;
+import com.inventory.order.model.Order;
 
 public interface OrderService {
 
@@ -24,5 +26,7 @@ public interface OrderService {
     ResponseEntity<Object> getCustomerAddress(int createdBy);
     
     ResponseEntity<Object> cancelOrderById(Long id);
+    
+    ResponseEntity<Object> returnOrder(OrderReturnItemsDTO returnDTO);
 
 }

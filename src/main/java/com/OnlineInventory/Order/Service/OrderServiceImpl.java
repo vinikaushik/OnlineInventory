@@ -1,13 +1,12 @@
 package com.inventory.order.service;
 
-import com.inventory.order.dto.CustomerAddressDTO;
-import com.inventory.order.repository.CustomerAddressRepository;
-import com.inventory.order.infrastructure.util.OrderConversionUtil;
-import com.inventory.order.dto.OrderDTO;
-import com.inventory.order.model.*;
-import com.inventory.order.repository.*;
-
-
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +15,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.*;
+import com.inventory.order.dto.CustomerAddressDTO;
+import com.inventory.order.dto.ItemDTO;
+import com.inventory.order.dto.OrderDTO;
+import com.inventory.order.dto.OrderReturnItemsDTO;
+import com.inventory.order.infrastructure.util.OrderConversionUtil;
+import com.inventory.order.model.CustomerAddress;
+import com.inventory.order.model.CustomerDetail;
+import com.inventory.order.model.Order;
+import com.inventory.order.model.OrderAddressDetail;
+import com.inventory.order.model.OrderDetail;
+import com.inventory.order.model.OrderHistory;
+import com.inventory.order.model.PaymentDetails;
+import com.inventory.order.repository.CustomerAddressRepository;
+import com.inventory.order.repository.OrderDetailRepository;
+import com.inventory.order.repository.OrderHistoryRepository;
+import com.inventory.order.repository.OrderRepository;
+import com.inventory.order.repository.PaymentRepository;
 
 @Service
 
@@ -246,5 +257,42 @@ public class OrderServiceImpl implements OrderService{
 		}
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
-
+    
+    
+    public ResponseEntity<Object> returnOrder(OrderReturnItemsDTO returnDTO) {
+    	log.info("inside return order by id - "+returnDTO.getOrderId());
+		Optional<Order> order = orderRepository.findById(returnDTO.getOrderId());
+		if(order.isPresent()) {
+			Order newOrder = (Order)order.get();
+			
+			List <OrderDetail> items =newOrder.getOrderDetailList();
+			int totalItems = items.size();
+			System.out.println("total items: "+totalItems);
+			int returnedItem = 0;
+			for(int i=0; i<totalItems;i++) {
+				if(newOrder.getOrderDetailList().get(i).getItemStatus()==6 || 
+						newOrder.getOrderDetailList().get(i).getItemStatus()==8){
+					returnedItem=returnedItem+1;
+				}else {
+					for(ItemDTO item: returnDTO.getItemLists()) {
+						if(newOrder.getOrderDetailList().get(i).getItem().getId()==item.getItemId()) {
+							newOrder.getOrderDetailList().get(i).setItemStatus(6);
+							break;
+						}
+					}
+				}
+				
+			}
+			
+			if(totalItems > (returnedItem + returnDTO.getItemLists().size())){
+				newOrder.setOrderStatus(7);
+			}else {
+				newOrder.setOrderStatus(8);
+			}
+			
+			orderRepository.save(newOrder);
+			return ResponseEntity.ok(newOrder.getOrder_id());
+		}
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    }
 }
