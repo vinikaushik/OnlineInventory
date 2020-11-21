@@ -1,17 +1,26 @@
 package com.inventory.order.controller;
 
-import com.inventory.order.dto.CustomerAddressDTO;
-import com.inventory.order.dto.OrderDTO;
-import com.inventory.order.model.Order;
-import com.inventory.order.service.OrderService;
-import com.inventory.order.service.OrderServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.inventory.order.dto.CustomerAddressDTO;
+import com.inventory.order.dto.OrderDTO;
+import com.inventory.order.dto.OrderReturnItemsDTO;
+import com.inventory.order.model.Order;
+import com.inventory.order.service.OrderService;
 
 @RestController
 @CrossOrigin
@@ -77,5 +86,11 @@ public class OrderController {
        // Order order = (Order)orderService.getOrderById(orderId); 
     	
     	return orderService.cancelOrderById(orderId);
+    }
+    
+    @PutMapping("/returnOrder")
+    public ResponseEntity<Object> returnOrder(@RequestBody OrderReturnItemsDTO returnItemDTO){
+        System.out.println("inside return orders..");
+        return orderService.returnOrder(returnItemDTO);
     }
 }
